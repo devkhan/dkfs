@@ -83,7 +83,7 @@ int main(int argc, char **argv)
         GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ | FILE_SHARE_WRITE,
         NULL, OPEN_EXISTING, 
-        FILE_ATTRIBUTE_NORMAL, NULL);
+        FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH, NULL);
 
     if (hDisk == INVALID_HANDLE_VALUE)
     {
@@ -118,12 +118,17 @@ int main(int argc, char **argv)
     cout << "FSCTL_QUERY_FILE_SYSTEM_RECOGNITION returned success.\n";
     //cout << "FSCTL_QUERY_FILE_SYSTEM_RECOGNITION retrieved \"%S\".\n" << FsRi.FileSystem;
 
-    LPCVOID writeBuffer = "dkfs: don't know fucking shit";
+    string tempString = "should we try some offsetted IO now?";
+    LPCVOID writeBuffer = (void *)tempString.c_str();
     LPVOID readBuffer = new char[512];
-    LPDWORD writtenBytes = 0, readBytes = 0;
+    LPDWORD writtenBytes, readBytes;
+    writtenBytes = new DWORD;
+    readBytes = new DWORD;
+    *writtenBytes = 0;
+    *readBytes = 0;
 
     BOOL readResult = FALSE;
-    readResult = ReadFile(
+    /*readResult = ReadFile(
         hDisk,
         readBuffer,
         512,
@@ -139,14 +144,20 @@ int main(int argc, char **argv)
     {
         string str((char *)readBuffer);
         cout << "Success reading." << str;
-    }
+    }*/
     
+    OVERLAPPED overlap = {};
+    overlap.Offset = 67584;
+    
+    overlap.hEvent = 0;
+    overlap.Pointer = 0;
+
     BOOL writeResult = WriteFile(
         hDisk,
         writeBuffer,
         512,
-        writtenBytes,
-        NULL);
+        NULL,
+        &overlap);
 
     if (writeResult == FALSE)
     {
@@ -155,8 +166,23 @@ int main(int argc, char **argv)
     }
     else
     {
-        string str((char *)writeBuffer);
-        cout << "Success writing. Written bytes: " << *writtenBytes;
+        //FlushFileBuffers(hDisk);
+        readResult = ReadFile(
+            hDisk,
+            readBuffer,
+            512,
+            readBytes,
+            NULL);
+        string str((char *)readBuffer);
+        cout << "Success writing. Written bytes: " << "";
+
+        byte *read = (byte *)readBuffer;
+        while(((read))[0] != '\0')
+        {
+            char c = (read)[0];
+            cout << c;
+            read++;
+        }
     }
 
     if (hDisk != INVALID_HANDLE_VALUE)
