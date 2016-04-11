@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     HANDLE  hDisk = INVALID_HANDLE_VALUE;
     BOOL fResult = FALSE;
     hDisk = CreateFile(volumeNameBuffer,
-        GENERIC_READ,
+        GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ | FILE_SHARE_WRITE,
         NULL, OPEN_EXISTING, 
         FILE_ATTRIBUTE_NORMAL, NULL);
@@ -137,16 +137,27 @@ int main(int argc, char **argv)
     }
     else
     {
-        cout << "Success reading." << (char *)readBuffer;
+        string str((char *)readBuffer);
+        cout << "Success reading." << str;
     }
-    /*BOOL writeResult = WriteFile(
+    
+    BOOL writeResult = WriteFile(
         hDisk,
-        lpBuffer,
+        writeBuffer,
         512,
         writtenBytes,
         NULL);
-*/
 
+    if (writeResult == FALSE)
+    {
+        cout << "Failure writing." << GetLastError();
+        return 1;
+    }
+    else
+    {
+        string str((char *)writeBuffer);
+        cout << "Success writing. Written bytes: " << *writtenBytes;
+    }
 
     if (hDisk != INVALID_HANDLE_VALUE)
     {
