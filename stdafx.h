@@ -10,6 +10,9 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <iostream>
+#include <windows.h>
+#include <string>
+#include <atlstr.h>
+#include <ctime>
 
-
-// TODO: reference additional headers your program requires here
+#define WIN32_LEAN_AND_MEAN
