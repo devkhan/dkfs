@@ -1,16 +1,15 @@
-﻿#include "File.h"
+﻿#include "stdafx.h"
+#include "File.h"
 
-File::File(string name = "", void* data = nullptr)
+File::File(string name, void* _data)
 {
     fileName = name;
-    size = 0;
+    data = (byte*)_data;
+    size = string((char*)data).length();
     creationTime = time(0);
     accessionTime = creationTime;
     modificationTime = creationTime;
-    if (data == nullptr)
-    {
-
-    }
+    
 }
 
 File::File(void* data)
@@ -78,6 +77,7 @@ LONG32 File::getAccessionTime()
 bool File::setData(void* _data)
 {
     data = (byte*)_data;
+    return true;
 }
 
 void* File::getData()
@@ -101,19 +101,28 @@ byte* File::getSerializedFile()
         temp[i] = '\0';
     }
 
-    temp[i] = size;
-    i += 2;
+    temp[i++] = ((byte*)&size)[1];
+    temp[i++] = ((byte*)&size)[0];
 
-    temp[i] = creationTime;
-    i += 4;
-    temp[i] = modificationTime;
-    i += 4;
-    temp[i] = accessionTime;
-    i += 4;
+    temp[i++] = ((byte*)&creationTime)[3];
+    temp[i++] = ((byte*)&creationTime)[2];
+    temp[i++] = ((byte*)&creationTime)[1];
+    temp[i++] = ((byte*)&creationTime)[0];
+
+    temp[i++] = ((byte*)&modificationTime)[3];
+    temp[i++] = ((byte*)&modificationTime)[2];
+    temp[i++] = ((byte*)&modificationTime)[1];
+    temp[i++] = ((byte*)&modificationTime)[0];
+
+    temp[i++] = ((byte*)&accessionTime)[3];
+    temp[i++] = ((byte*)&accessionTime)[2];
+    temp[i++] = ((byte*)&accessionTime)[1];
+    temp[i++] = ((byte*)&accessionTime)[0];
 
     while(i < 4096)
     {
         temp[i] = data[i];
+        i++;
     }
 
     return temp;

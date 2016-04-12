@@ -18,7 +18,7 @@ class File
 
         File(void* _data);
 
-        File(string name = "", void* data = nullptr);
+        File(string name = "", void* _data = nullptr);
 
         bool setFileName(string name);
         
