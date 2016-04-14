@@ -1,6 +1,7 @@
 // dkfs.cpp : Defines the entry point for the console application.
 //
 #include "stdafx.h"
+#include "File.h"
 
 using namespace std;
 
@@ -79,7 +80,7 @@ int main(int argc, char **argv)
         GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ | FILE_SHARE_WRITE,
         NULL, OPEN_EXISTING, 
-        FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH | FILE_FLAG_OVERLAPPED, NULL);
+        FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH , NULL);
 
     if (hDisk == INVALID_HANDLE_VALUE)
     {
@@ -114,14 +115,20 @@ int main(int argc, char **argv)
     cout << "FSCTL_QUERY_FILE_SYSTEM_RECOGNITION returned success.\n";
     //cout << "FSCTL_QUERY_FILE_SYSTEM_RECOGNITION retrieved \"%S\".\n" << FsRi.FileSystem;
 
+
+
+
+    File file("first_file", "Lets see if this file shows up or not.");
     string tempString = "lets try everything?";
-    LPCVOID writeBuffer = (void *)tempString.c_str();
+    LPCVOID writeBuffer = (void *)file.getSerializedFile();
     LPVOID readBuffer = new char[512];
     LPDWORD writtenBytes, readBytes;
     writtenBytes = new DWORD;
     readBytes = new DWORD;
     *writtenBytes = 0;
     *readBytes = 0;
+
+    
 
     BOOL readResult = FALSE;
     /*readResult = ReadFile(
@@ -151,9 +158,9 @@ int main(int argc, char **argv)
     BOOL writeResult = WriteFile(
         hDisk,
         writeBuffer,
-        512,
-        NULL,
-        &overlap);
+        4096,
+        writtenBytes,
+        NULL);
 
     if (writeResult == FALSE)
     {
