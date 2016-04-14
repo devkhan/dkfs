@@ -6,7 +6,7 @@ class FSIO
 {
     char driveLetter;
     
-    string drivePath;
+    wstring drivePath;
 
     HANDLE diskHandle;
 
@@ -14,19 +14,21 @@ class FSIO
 
     public:
 
+        FSIO() : FSIO("D:\\"){}
+
         ~FSIO();
 
-        FSIO(string drivePath);
+        FSIO(string drive);
 
-        File ReadFile(string filename);
+        File Read(string filename);
 
-        bool CreateFile(File file);
+        bool Create(File file);
 
-        bool ModifyFile(string name, USHORT size, void* data);
+        bool Modify(string name, USHORT size, void* data);
 
-        bool DeleteFile(string filename);
+        bool Delete(string filename);
 
-        vector<File> ListFiles();
+        vector<File> List();
 
-        bool RenameFile(string oldName, string newName);
+        bool Rename(string oldName, string newName);
 };
