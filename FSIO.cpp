@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "FSIO.h"
+#include "File.h"
 
 FSIO::~FSIO()
 {
@@ -50,3 +51,31 @@ FSIO::FSIO(string drive)
     cout << "\nSuccess opening file.";    
 }
 
+File FSIO::Read(string filename)
+{
+    LPVOID readBuffer = new char[4096];
+    BOOL readResult = FALSE;
+    string _filename;
+    File *file;
+    do
+    {
+        readResult = ReadFile(
+            diskHandle,
+            readBuffer,
+            512,
+            NULL,
+            NULL);
+
+        if (readResult == FALSE)
+        {
+            cout << "Failure reading." << GetLastError();
+            return NULL;
+        }
+
+        file = new File(readBuffer);
+        _filename = (*file).getFileName();
+    } while (filename != _filename);
+    
+    cout << "Success reading.";
+    return *file;
+}
