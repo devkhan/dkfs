@@ -79,3 +79,22 @@ File FSIO::Read(string filename)
     cout << "Success reading.";
     return *file;
 }
+
+bool FSIO::Create(File file)
+{
+    BOOL writeResult = WriteFile(
+        diskHandle,
+        file.getSerializedFile(),
+        4096,
+        NULL,
+        NULL);
+
+    if (writeResult == FALSE)
+    {
+        cout << "Failure writing.";
+        lastError = GetLastError();
+    }
+
+    return writeResult;
+}
+
