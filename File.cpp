@@ -9,7 +9,6 @@ File::File(string name, void* _data)
     creationTime = time(0);
     accessionTime = creationTime;
     modificationTime = creationTime;
-    
 }
 
 File::File(void* data)
@@ -121,7 +120,7 @@ byte* File::getSerializedFile()
 
     while(i < 4096)
     {
-        temp[i] = data[i];
+        temp[i] = data[i-30];
         i++;
     }
 
