@@ -30,6 +30,9 @@
     <ClInclude Include="File.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="FSIO.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="File.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FSIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,5 +14,6 @@
 #include <string>
 #include <atlstr.h>
 #include <ctime>
+#include <vector>
 
 #define WIN32_LEAN_AND_MEAN

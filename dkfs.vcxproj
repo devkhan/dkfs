@@ -143,12 +143,14 @@
   <ItemGroup>
     <ClInclude Include="dkfs.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="FSIO.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dkfs.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="FSIO.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
