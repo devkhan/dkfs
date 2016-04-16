@@ -43,6 +43,7 @@ bool File::setFileName(string name)
 {
     fileName = name;
     setModificationTime(time(0));
+    setAccessionTime(time(0));
     return true;
 }
 
@@ -82,6 +83,8 @@ LONG32 File::getAccessionTime()
 bool File::setData(string _data)
 {
     data = _data;
+    setModificationTime(std::time(0));
+    setAccessionTime(std::time(0));
     return true;
 }
 

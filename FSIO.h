@@ -28,7 +28,7 @@ class FSIO
 
         bool Create(File file);
 
-        bool Modify(string name, USHORT size, void* data);
+        bool Modify(string name, string data);
 
         bool Delete(string filename);
 

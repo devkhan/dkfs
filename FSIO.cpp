@@ -78,7 +78,6 @@ File* FSIO::ReadNext()
 {
     LPVOID readBuffer = new char[4096];
     BOOL readResult = FALSE;
-
     LPDWORD readBytes;
     readBytes = new DWORD;
     *readBytes = 0;
@@ -144,6 +143,41 @@ bool FSIO::Create(File file)
     }
 
     return writeResult;
+}
+
+bool FSIO::Modify(string name, string data)
+{
+    string _filename;
+    SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    File *file;
+    do
+    {
+        file = ReadNext();
+        if (eof)
+        {
+            cout << "File not found.";
+            return false;
+        }
+        _filename = file->getFileName();
+
+    } while (_filename != name);
+    SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
+    file->setData(data);
+
+    BOOL modifyResult = WriteFile(
+        diskHandle,
+        file->getSerializedFile(),
+        4096,
+        NULL,
+        NULL);
+
+    if (modifyResult == FALSE)
+    {
+        cout << "Failure renaming.";
+        lastError = GetLastError();
+    }
+
+    return modifyResult;
 }
 
 bool FSIO::Delete(string filename)
