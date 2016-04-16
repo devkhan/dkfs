@@ -23,16 +23,17 @@ File::File(void* data)
     }
     fileName = string(tempName);
 
-    size = (tempData[i + 1] << 8) | (tempData[i]);
-    i += 2;
+    size = tempData[i++];
+    size = (size << 8)  + (tempData[i]);
+    i++;
 
-    creationTime = (tempData[i + 3] << 24) | (tempData[i + 2] << 16) | (tempData[i + 1] << 8) | (tempData[i]);
+    creationTime = (tempData[i] << 24) | (tempData[i + 1] << 16) | (tempData[i + 2] << 8) | (tempData[i + 3]);
     i += 4;
 
-    modificationTime = (tempData[i + 3] << 24) | (tempData[i + 2] << 16) | (tempData[i + 1] << 8) | (tempData[i]);
+    modificationTime = (tempData[i] << 24) | (tempData[i + 1] << 16) | (tempData[i + 2] << 8) | (tempData[i + 3]);
     i += 4;
 
-    accessionTime = (tempData[i + 3] << 24) | (tempData[i + 2] << 16) | (tempData[i + 1] << 8) | (tempData[i]);
+    accessionTime = (tempData[i] << 24) | (tempData[i + 1] << 16) | (tempData[i + 2] << 8) | (tempData[i + 3]);
     i += 4;
 
     data = &tempData[i];
@@ -48,6 +49,11 @@ bool File::setFileName(string name)
 string File::getFileName()
 {
     return fileName;
+}
+
+USHORT File::getSize()
+{
+    return size;
 }
 
 bool File::setModificationTime(LONG32 time)

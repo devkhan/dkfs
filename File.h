@@ -24,6 +24,8 @@ class File
         
         string getFileName();
 
+        USHORT getSize();
+
         bool setModificationTime(LONG32 time);
 
         LONG32 getModificationTime();
