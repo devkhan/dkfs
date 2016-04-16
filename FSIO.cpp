@@ -161,6 +161,29 @@ bool FSIO::Delete(string filename)
 
     return deleteResult;
 }
+
+vector<File> FSIO::List()
+{
+    vector<File> files;
+    File *file = nullptr;
+    SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    eof = false;
+    do
+    {
+        file = ReadNext();
+        if (file == nullptr)
+        {
+            break;
+        }
+        if (file->getFileName().length() != 0)
+        {
+            files.push_back(*file);
+        }
+    } while (!eof);
+
+    return files;
+}
+
 bool FSIO::Rename(string oldName, string newName)
 {
     string _filename;
