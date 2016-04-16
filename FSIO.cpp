@@ -52,7 +52,7 @@ FSIO::FSIO(string drive)
     cout << "\nSuccess opening file.";    
 }
 
-File FSIO::Read(string filename)
+File* FSIO::Read(string filename)
 {
     string _filename;
     File *file = nullptr;
@@ -60,6 +60,10 @@ File FSIO::Read(string filename)
     do
     {
         file = ReadNext();
+        if (eof)
+        {
+            break;
+        }
         if (file == nullptr)
         {
             continue;
@@ -67,7 +71,7 @@ File FSIO::Read(string filename)
         _filename = file->getFileName();
     } while (filename != _filename);
     
-    return *file;    
+    return file;    
 }
 
 File* FSIO::ReadNext()
