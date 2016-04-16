@@ -17,7 +17,7 @@ FSIO::FSIO(string drive)
     driveLetter = drive[0];
     wstring stemp = wstring(drive.begin(), drive.end());
     //LPCWSTR mount = stemp.c_str();
-    LPWSTR volumeNameBuffer = new TCHAR[1000];
+    LPWSTR volumeNameBuffer = new TCHAR[200];
     DWORD maxLength = 100;
     BOOL success = GetVolumeNameForVolumeMountPoint(stemp.c_str(), volumeNameBuffer, maxLength);
 
