@@ -161,3 +161,37 @@ bool FSIO::Delete(string filename)
 
     return deleteResult;
 }
+bool FSIO::Rename(string oldName, string newName)
+{
+    string _filename;
+    SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    File *file;
+    do
+    {
+        file = ReadNext();
+        if (eof)
+        {
+            cout << "File not found.";
+            return false;
+        }
+        _filename = file->getFileName();
+
+    } while (_filename != oldName);
+    SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
+    file->setFileName(newName);
+
+    BOOL renameResult = WriteFile(
+        diskHandle,
+        file->getSerializedFile(),
+        4096,
+        NULL,
+        NULL);
+
+    if (renameResult == FALSE)
+    {
+        cout << "Failure renaming.";
+        lastError = GetLastError();
+    }
+
+    return renameResult;
+}
