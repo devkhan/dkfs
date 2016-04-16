@@ -22,6 +22,8 @@ class FSIO
 
         File Read(string filename);
 
+        File* ReadNext();
+
         bool Create(File file);
 
         bool Modify(string name, USHORT size, void* data);

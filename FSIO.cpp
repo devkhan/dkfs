@@ -53,31 +53,47 @@ FSIO::FSIO(string drive)
 
 File FSIO::Read(string filename)
 {
-    LPVOID readBuffer = new char[4096];
-    BOOL readResult = FALSE;
     string _filename;
-    File *file;
+    File *file = nullptr;
+    
     do
     {
-        readResult = ReadFile(
-            diskHandle,
-            readBuffer,
-            512,
-            NULL,
-            NULL);
-
-        if (readResult == FALSE)
+        file = ReadNext();
+        if (file == nullptr)
         {
-            cout << "Failure reading." << GetLastError();
-            return NULL;
+            continue;
         }
-
-        file = new File(readBuffer);
-        _filename = (*file).getFileName();
+        _filename = file->getFileName();
     } while (filename != _filename);
     
-    cout << "Success reading.";
-    return *file;
+    return *file;    
+}
+
+File* FSIO::ReadNext()
+{
+    LPVOID readBuffer = new char[4096];
+    BOOL readResult = FALSE;
+
+    
+    File *file;
+
+    readResult = ReadFile(
+        diskHandle,
+        readBuffer,
+        4096,
+        NULL,
+        NULL);
+
+    if (readResult == FALSE)
+    {
+        cout << "Failure reading." << GetLastError();
+        return nullptr;
+    }
+    
+    file = new File(readBuffer);
+
+    //cout << "Success reading.";
+    return file;
 }
 
 bool FSIO::Create(File file)
