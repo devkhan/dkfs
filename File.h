@@ -12,13 +12,13 @@ class File
     LONG32 accessionTime;
     LONG32 modificationTime;
 
-    byte *data;
+    string data;
     
     public:
 
         File(void* _data);
 
-        File(string name = "", void* _data = nullptr);
+        File(string name = "", string data = "");
 
         bool setFileName(string name);
         
@@ -34,9 +34,9 @@ class File
 
         LONG32 getAccessionTime();
 
-        bool setData(void * data);
+        bool setData(string);
 
-        void* getData();
+        string getData();
 
         byte* getSerializedFile();
 };

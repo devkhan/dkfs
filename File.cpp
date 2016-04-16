@@ -1,20 +1,20 @@
 ﻿#include "stdafx.h"
 #include "File.h"
 
-File::File(string name, void* _data)
+File::File(string name, string _data)
 {
     fileName = name;
-    data = (byte*)_data;
-    size = string((char*)data).length();
+    data = _data;
+    size = data.length();
     creationTime = time(0);
     accessionTime = creationTime;
     modificationTime = creationTime;
 }
 
-File::File(void* data)
+File::File(void* _data)
 {
     size_t i = 0;
-    byte *tempData = (byte*)data;
+    byte *tempData = (byte*)_data;
     char tempName[16];
     while(i < 16)
     {
@@ -36,7 +36,7 @@ File::File(void* data)
     accessionTime = (tempData[i] << 24) | (tempData[i + 1] << 16) | (tempData[i + 2] << 8) | (tempData[i + 3]);
     i += 4;
 
-    data = &tempData[i];
+    data = string((char*)(tempData+i));
 }
 
 bool File::setFileName(string name)
@@ -79,15 +79,15 @@ LONG32 File::getAccessionTime()
     return accessionTime;
 }
 
-bool File::setData(void* _data)
+bool File::setData(string _data)
 {
-    data = (byte*)_data;
+    data = _data;
     return true;
 }
 
-void* File::getData()
+string File::getData()
 {
-    return (void*)data;
+    return data;
 }
 
 byte* File::getSerializedFile()
@@ -124,10 +124,15 @@ byte* File::getSerializedFile()
     temp[i++] = ((byte*)&accessionTime)[1];
     temp[i++] = ((byte*)&accessionTime)[0];
 
+    for (int j = 0; j < data.length(); j++)
+    {
+        temp[i] = data[j];
+        i++;
+    }
+
     while(i < 4096)
     {
-        temp[i] = data[i-30];
-        i++;
+        temp[i++] = '\0';
     }
 
     return temp;
