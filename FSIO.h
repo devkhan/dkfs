@@ -12,6 +12,8 @@ class FSIO
 
     DWORD lastError;
 
+    bool eof;
+
     public:
 
         FSIO() : FSIO("D:\\"){}

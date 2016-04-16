@@ -13,6 +13,7 @@ FSIO::~FSIO()
 
 FSIO::FSIO(string drive)
 {
+    eof = false;
     driveLetter = drive[0];
     wstring stemp = wstring(drive.begin(), drive.end());
     //LPCWSTR mount = stemp.c_str();
@@ -74,6 +75,9 @@ File* FSIO::ReadNext()
     LPVOID readBuffer = new char[4096];
     BOOL readResult = FALSE;
 
+    LPDWORD readBytes;
+    readBytes = new DWORD;
+    *readBytes = 0;
     
     File *file;
 
@@ -81,12 +85,18 @@ File* FSIO::ReadNext()
         diskHandle,
         readBuffer,
         4096,
-        NULL,
+        readBytes,
         NULL);
 
     if (readResult == FALSE)
     {
         cout << "Failure reading." << GetLastError();
+        return nullptr;
+    }
+
+    if (readResult && *readBytes == 0)
+    {
+        eof = true;
         return nullptr;
     }
     
