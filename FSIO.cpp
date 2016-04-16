@@ -124,3 +124,40 @@ bool FSIO::Create(File file)
     return writeResult;
 }
 
+bool FSIO::Delete(string filename)
+{
+    string _filename;
+    SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    do
+    {
+        if (eof)
+        {
+            cout << "File not found.";
+            return false;
+        }
+        _filename = ReadNext()->getFileName();
+
+    } while (_filename != filename);
+    SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
+
+    byte *emptyBuffer;
+    emptyBuffer = new byte[4096];
+    for (size_t i = 0; i < 4096; i++)
+    {
+        emptyBuffer[i] = '\0';
+    }
+    BOOL deleteResult = WriteFile(
+        diskHandle,
+        emptyBuffer,
+        4096,
+        NULL,
+        NULL);
+
+    if (deleteResult == FALSE)
+    {
+        cout << "Failure deleting.";
+        lastError = GetLastError();
+    }
+
+    return deleteResult;
+}
