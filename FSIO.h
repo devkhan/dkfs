@@ -22,7 +22,7 @@ class FSIO
 
         FSIO(string drive);
 
-        File Read(string filename);
+        File* Read(string filename);
 
         File* ReadNext();
 

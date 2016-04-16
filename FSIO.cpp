@@ -108,6 +108,24 @@ File* FSIO::ReadNext()
 
 bool FSIO::Create(File file)
 {
+    if (!(Read(file.getFileName()) == nullptr && eof))
+    {
+        cout << "File exists already.";
+        return false;
+    }
+    string _filename;
+    SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    do
+    {
+        if (eof)
+        {
+            cout << "Disk full.";
+            return false;
+        }
+        _filename = ReadNext()->getFileName();
+
+    } while (_filename != "");
+    SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
     BOOL writeResult = WriteFile(
         diskHandle,
         file.getSerializedFile(),
