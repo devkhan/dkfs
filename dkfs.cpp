@@ -53,6 +53,21 @@ int main(int argc, char **argv)
         default:
             cout << "Unknown command. We told you its dead stark, so don't greedy.";
             break;
+            case 'r':
+                cout << "Enter file to rename: ";
+                cin >> input;
+                cout << "Enter new name: ";
+                cin >> input2;
+                if (fsio->Rename(input, input2))
+                {
+                    cout << "success renaming " << input << "-->" << input2;
+                }
+                else
+                {
+                    cout << "Unable to rename!";
+                }
+                break;
+
             case 'x':
                 delete fsio;
                 cout << "Namaste _/\\_";
