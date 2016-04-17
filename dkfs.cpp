@@ -11,9 +11,12 @@ int main(int argc, char **argv)
     wcout << "dkfs: dead stark file system. Enter h for help." << endl;
 
     string drive = "D:\\";
-    FSIO fsio(drive);
+    FSIO *fsio;
+    File *file;
+    fsio = new FSIO(drive);
+    fstream externalFile;
     char command;
-    string input;
+    string input, input2;
     do
     {
         cout << ">> ";
@@ -28,9 +31,6 @@ int main(int argc, char **argv)
                 }
                 break;
 
-        case 'x':
-            cout << "Namaste _/\\_";
-            break;
             case 'k':
                 cout << "Enter filename to print: ";
                 cin >> input;
@@ -53,6 +53,14 @@ int main(int argc, char **argv)
         default:
             cout << "Unknown command. We told you its dead stark, so don't greedy.";
             break;
+            case 'x':
+                delete fsio;
+                cout << "Namaste _/\\_";
+                break;
+
+            default:
+                cout << "Unknown command. We told you its dead stark, so don't be greedy.";
+                break;
         }
         cout << endl;
     } while (command != 'x');
