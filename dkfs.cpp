@@ -31,6 +31,19 @@ int main(int argc, char **argv)
                 }
                 break;
 
+            case 's':
+                cout << "Enter drive: ";
+                cin >> input;
+                drive = input;
+                fsio = new FSIO(drive);
+                break;
+
+            case 't':
+                cout << "Setting drive to default i.e. D:\\ ...";
+                drive = "D:\\";
+                fsio = new FSIO(drive);
+                break;
+
             case 'k':
                 cout << "Enter filename to print: ";
                 cin >> input;
