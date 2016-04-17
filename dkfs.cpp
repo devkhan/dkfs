@@ -20,9 +20,13 @@ int main(int argc, char **argv)
         cin >> command;
         switch (command)
         {
-        case 'h':
-            cout << "Help will be added. Hang on.";
-            break;
+            case 'h':                
+                externalFile.open("help.txt", ios::in);
+                while (!externalFile.eof())
+                {
+                    cout << static_cast<char>(externalFile.get());
+                }
+                break;
 
         case 'x':
             cout << "Namaste _/\\_";

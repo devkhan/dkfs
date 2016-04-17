@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="help.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

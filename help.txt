@@ -1,0 +1,11 @@
+Commands:
+
+    h - Show this help and exit.
+    s - set drive.
+    t - reset drive to default.
+    c - create mode.
+    d - delete mode.
+    l - list all files.
+    e - edit file's contents.
+    r - rename a file.
+    x - exit dkfs.
