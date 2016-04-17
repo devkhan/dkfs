@@ -50,9 +50,22 @@ int main(int argc, char **argv)
                 }
                 break;
 
-        default:
-            cout << "Unknown command. We told you its dead stark, so don't greedy.";
-            break;
+            case 'd':
+                cout << "Enter filename to delete: ";
+                cin >> input;
+                if (input.length() > 16 || input.length() < 0)
+                {
+                    cout << "Invalid filename!";
+                    break;
+                }
+                if (fsio->Delete(input))
+                {
+                    cout << "success deleting '" << input << "'...";
+                    break;
+                }
+                cout << "No such file exists.";
+                break;
+
 
             case 'e':
                 cout << "Enter file to edit: ";
