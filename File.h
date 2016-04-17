@@ -26,6 +26,8 @@ class File
 
         USHORT getSize();
 
+        LONG32 getCreationTime();
+
         bool setModificationTime(LONG32 time);
 
         LONG32 getModificationTime();

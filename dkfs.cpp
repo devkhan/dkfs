@@ -31,6 +31,24 @@ int main(int argc, char **argv)
         case 'x':
             cout << "Namaste _/\\_";
             break;
+            case 'k':
+                cout << "Enter filename to print: ";
+                cin >> input;
+                file = fsio->Read(input);
+                if (file == nullptr)
+                {
+                    cout << "File not found!";
+                }
+                else
+                {
+                    cout << "File: " << file->getFileName() << endl;
+                    cout << "Size: " << file->getSize() << endl;
+                    cout << "Created: " << file->getCreationTime() << endl;
+                    cout << "Last accessed: " << file->getAccessionTime() << endl;
+                    cout << "Last modified: " << file->getModificationTime() << endl;
+                    cout << file->getData();
+                }
+                break;
 
         default:
             cout << "Unknown command. We told you its dead stark, so don't greedy.";

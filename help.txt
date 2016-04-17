@@ -4,6 +4,7 @@ Commands:
     s - set drive.
     t - reset drive to default.
     c - create mode.
+    k - print a file.
     d - delete mode.
     l - list all files.
     e - edit file's contents.

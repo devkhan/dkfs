@@ -57,6 +57,11 @@ USHORT File::getSize()
     return size;
 }
 
+LONG32 File::getCreationTime()
+{
+    return creationTime;
+}
+
 bool File::setModificationTime(LONG32 time)
 {
     modificationTime = time;
@@ -83,6 +88,7 @@ LONG32 File::getAccessionTime()
 bool File::setData(string _data)
 {
     data = _data;
+    size = data.length();
     setModificationTime(std::time(0));
     setAccessionTime(std::time(0));
     return true;
