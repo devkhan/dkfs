@@ -44,6 +44,32 @@ int main(int argc, char **argv)
                 fsio = new FSIO(drive);
                 break;
 
+            case 'c':
+                cout << "Enter filename for new file: ";
+                cin >> input;
+                if (input.length() > 16 || input.length() < 0)
+                {
+                    cout << "Invalid filename!";
+                    break;
+                }
+                file = new File(input);
+                cout << "Enter data to be put into file: ";
+                cin >> input;
+                if (input.length() > 4060)
+                {
+                    cout << "File larger than supported size! Will be truncated.";
+                }
+                file->setData(input);
+                if (fsio->Create(*file))
+                {
+                    cout << file->getFileName() << " written successfully.";
+                }
+                else
+                {
+                    cout << "Unable to write file!";
+                }
+                break;
+
             case 'k':
                 cout << "Enter filename to print: ";
                 cin >> input;
