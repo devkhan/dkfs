@@ -53,6 +53,22 @@ int main(int argc, char **argv)
         default:
             cout << "Unknown command. We told you its dead stark, so don't greedy.";
             break;
+
+            case 'e':
+                cout << "Enter file to edit: ";
+                cin >> input;
+                cout << "Enter data to put into file: ";
+                cin >> input2;
+                if (fsio->Modify(input, input2))
+                {
+                    cout << "Unable to modify file!";
+                }
+                else
+                {
+                    cout << "Success modified file " << input << ".";
+                }
+                break;
+
             case 'r':
                 cout << "Enter file to rename: ";
                 cin >> input;
