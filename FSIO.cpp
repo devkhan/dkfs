@@ -56,7 +56,8 @@ File* FSIO::Read(string filename)
 {
     string _filename;
     File *file = nullptr;
-    
+    SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    eof = false;
     do
     {
         file = ReadNext();
@@ -81,8 +82,15 @@ File* FSIO::ReadNext()
     LPDWORD readBytes;
     readBytes = new DWORD;
     *readBytes = 0;
-    
+    static int c;
+    c++;
     File *file;
+
+    if (c == 4096)
+    {
+        eof = true;
+        return nullptr;
+    }
 
     readResult = ReadFile(
         diskHandle,
@@ -118,6 +126,7 @@ bool FSIO::Create(File file)
     }
     string _filename;
     SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    eof = false;
     do
     {
         if (eof)
@@ -149,6 +158,7 @@ bool FSIO::Modify(string name, string data)
 {
     string _filename;
     SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    eof = false;
     File *file;
     do
     {
@@ -184,6 +194,7 @@ bool FSIO::Delete(string filename)
 {
     string _filename;
     SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    eof = false;
     do
     {
         if (eof)
@@ -244,6 +255,7 @@ bool FSIO::Rename(string oldName, string newName)
 {
     string _filename;
     SetFilePointer(diskHandle, 0, NULL, FILE_BEGIN);
+    eof = false;
     File *file;
     do
     {
