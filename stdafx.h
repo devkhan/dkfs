@@ -16,5 +16,6 @@
 #include <ctime>
 #include <vector>
 #include <fstream>
+#include <iomanip>
 
 #define WIN32_LEAN_AND_MEAN

@@ -14,6 +14,7 @@ FSIO::~FSIO()
 FSIO::FSIO(string drive)
 {
     eof = false;
+    c = 0;
     driveLetter = drive[0];
     wstring stemp = wstring(drive.begin(), drive.end());
     //LPCWSTR mount = stemp.c_str();
@@ -82,12 +83,13 @@ File* FSIO::ReadNext()
     LPDWORD readBytes;
     readBytes = new DWORD;
     *readBytes = 0;
-    static int c;
+    
     c++;
     File *file;
 
     if (c == 4096)
     {
+        c = 0;
         eof = true;
         return nullptr;
     }

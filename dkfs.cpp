@@ -15,6 +15,8 @@ int main(int argc, char **argv)
     File *file;
     fsio = new FSIO(drive);
     fstream externalFile;
+    vector<File> files;
+    vector<File>::iterator iterator;
     char command;
     string input, input2;
     do
@@ -105,6 +107,19 @@ int main(int argc, char **argv)
                 cout << "No such file exists.";
                 break;
 
+            case 'l':
+                cout << "Files in " << drive << endl << endl;
+                cout << setfill(' ') << setw(16) << "Filename" 
+                     << setfill(' ') << setw(16) << "Size"
+                     << setfill(' ') << setw(16) << "Created at" << endl << endl;
+                files = fsio->List();
+                for (iterator = files.begin(); iterator < files.end(); ++iterator)
+                {
+                    cout << setfill(' ') << setw(16) << iterator->getFileName();
+                    cout << setfill(' ') << setw(16) << iterator->getSize();
+                    cout << setfill(' ') << setw(16) << iterator->getCreationTime() << endl;
+                }
+                break;
 
             case 'e':
                 cout << "Enter file to edit: ";

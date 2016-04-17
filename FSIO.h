@@ -14,6 +14,8 @@ class FSIO
 
     bool eof;
 
+    int c;
+
     public:
 
         FSIO() : FSIO("D:\\"){}
