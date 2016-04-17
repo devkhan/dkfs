@@ -33,7 +33,7 @@ FSIO::FSIO(string drive)
     for (i = 0; volumeNameBuffer[i] != '\0'; i++);
         volumeNameBuffer[--i] = '\0';
     drivePath = wstring(volumeNameBuffer);
-    cout << endl << "GUID Path of drive: " << CW2A(volumeNameBuffer) << endl;
+    //cout << "GUID Path of drive: " << CW2A(volumeNameBuffer) << endl;
     
     diskHandle = CreateFile(
         volumeNameBuffer,
@@ -50,7 +50,7 @@ FSIO::FSIO(string drive)
         return;
     }
 
-    cout << "\nSuccess opening file.";    
+    cout << "\nSuccess opening drive: " << drive << endl;    
 }
 
 File* FSIO::Read(string filename)

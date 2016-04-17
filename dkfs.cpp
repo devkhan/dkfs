@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     wcout << "dkfs: dead stark file system. Enter h for help." << endl;
-
+    wcout << "Sector size on disk: 512 B, dkfs block size: 4096 B." << endl;
     string drive = "D:\\";
     FSIO *fsio;
     File *file;
