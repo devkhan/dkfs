@@ -10,6 +10,8 @@ int main(int argc, char **argv)
 {
     wcout << "dkfs: dead stark file system. Enter h for help." << endl;
     wcout << "Sector size on disk: 512 B, dkfs block size: 4096 B." << endl;
+
+    // Declare resources.
     string drive = "D:\\";
     FSIO *fsio;
     File *file;
@@ -19,10 +21,13 @@ int main(int argc, char **argv)
     vector<File>::iterator iterator;
     char command;
     string input, input2;
+
+    // Interactive mode.
     do
     {
         cout << ">> ";
         cin >> command;
+
         switch (command)
         {
             case 'h':                
@@ -31,6 +36,7 @@ int main(int argc, char **argv)
                 {
                     cout << static_cast<char>(externalFile.get());
                 }
+                externalFile.close();
                 break;
 
             case 's':
@@ -116,7 +122,7 @@ int main(int argc, char **argv)
                 for (iterator = files.begin(); iterator < files.end(); ++iterator)
                 {
                     cout << setfill(' ') << setw(16) << iterator->getFileName();
-                    cout << setfill(' ') << setw(16) << iterator->getSize();
+                    cout << setfill(' ') << setw(14) << iterator->getSize() << " B";
                     cout << setfill(' ') << setw(16) << iterator->getCreationTime() << endl;
                 }
                 break;
@@ -128,11 +134,11 @@ int main(int argc, char **argv)
                 cin >> input2;
                 if (fsio->Modify(input, input2))
                 {
-                    cout << "Unable to modify file!";
+                    cout << "Success modified file " << input << ".";
                 }
                 else
                 {
-                    cout << "Success modified file " << input << ".";
+                    cout << "Unable to modify file!";
                 }
                 break;
 
