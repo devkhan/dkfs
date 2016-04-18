@@ -64,7 +64,8 @@ int main(int argc, char **argv)
                 }
                 file = new File(input);
                 cout << "Enter data to be put into file: ";
-                cin >> input;
+                getline(cin, input);
+                getline(cin, input);
                 if (input.length() > 4060)
                 {
                     cout << "File larger than supported size! Will be truncated.";
@@ -133,7 +134,8 @@ int main(int argc, char **argv)
                 cout << "Enter file to edit: ";
                 cin >> input;
                 cout << "Enter data to put into file: ";
-                cin >> input2;
+                getline(cin, input2);
+                getline(cin, input2);
                 if (fsio->Modify(input, input2))
                 {
                     cout << "Success modified file " << input << ".";
