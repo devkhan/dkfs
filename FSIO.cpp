@@ -73,14 +73,17 @@ File* FSIO::Read(string filename)
         _filename = file->getFileName();
     } while (filename != _filename);
 
-    SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
-    file->setAccessionTime(time(0));
-    WriteFile(
-        diskHandle,
-        file->getSerializedFile(),
-        4096,
-        NULL,
-        NULL);
+    if (file != nullptr)
+    {
+        SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
+        file->setAccessionTime(time(0));
+        WriteFile(
+            diskHandle,
+            file->getSerializedFile(),
+            4096,
+            NULL,
+            NULL);
+    }
     
     return file;    
 }
