@@ -6,6 +6,8 @@
 
 using namespace std;
 
+string getFormattedTime(time_t);
+
 int main(int argc, char **argv)
 {
     wcout << "dkfs: dead stark file system. Enter h for help." << endl;
@@ -90,9 +92,9 @@ int main(int argc, char **argv)
                 {
                     cout << "File: " << file->getFileName() << endl;
                     cout << "Size: " << file->getSize() << endl;
-                    cout << "Created: " << file->getCreationTime() << endl;
-                    cout << "Last accessed: " << file->getAccessionTime() << endl;
-                    cout << "Last modified: " << file->getModificationTime() << endl;
+                    cout << "Created: " << getFormattedTime(file->getCreationTime()) << endl;
+                    cout << "Last accessed: " << getFormattedTime(file->getAccessionTime()) << endl;
+                    cout << "Last modified: " << getFormattedTime(file->getModificationTime()) << endl;
                     cout << file->getData();
                 }
                 break;
@@ -117,13 +119,13 @@ int main(int argc, char **argv)
                 cout << "Files in " << drive << endl << endl;
                 cout << setfill(' ') << setw(16) << "Filename" 
                      << setfill(' ') << setw(16) << "Size"
-                     << setfill(' ') << setw(16) << "Created at" << endl << endl;
+                     << setfill(' ') << setw(28) << "Created at" << endl << endl;
                 files = fsio->List();
                 for (iterator = files.begin(); iterator < files.end(); ++iterator)
                 {
                     cout << setfill(' ') << setw(16) << iterator->getFileName();
                     cout << setfill(' ') << setw(14) << iterator->getSize() << " B";
-                    cout << setfill(' ') << setw(16) << iterator->getCreationTime() << endl;
+                    cout << setfill(' ') << setw(28) << getFormattedTime(iterator->getCreationTime()) << endl;
                 }
                 break;
 
@@ -170,5 +172,13 @@ int main(int argc, char **argv)
     } while (command != 'x');
 
     return 0;
+}
+
+string getFormattedTime(time_t t)
+{
+    struct tm *tm = localtime(&t);
+    char date[20];
+    strftime(date, sizeof(date), "%Y-%m-%d %H:%M:%S", tm);
+    return string(date);
 }
 
