@@ -72,6 +72,15 @@ File* FSIO::Read(string filename)
         }
         _filename = file->getFileName();
     } while (filename != _filename);
+
+    SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
+    file->setAccessionTime(time(0));
+    WriteFile(
+        diskHandle,
+        file->getSerializedFile(),
+        4096,
+        NULL,
+        NULL);
     
     return file;    
 }
@@ -175,6 +184,8 @@ bool FSIO::Modify(string name, string data)
     } while (_filename != name);
     SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
     file->setData(data);
+    file->setModificationTime(time(0));
+    file->setAccessionTime(time(0));
 
     BOOL modifyResult = WriteFile(
         diskHandle,
@@ -272,6 +283,8 @@ bool FSIO::Rename(string oldName, string newName)
     } while (_filename != oldName);
     SetFilePointer(diskHandle, -4096, NULL, FILE_CURRENT);
     file->setFileName(newName);
+    file->setModificationTime(time(0));
+    file->setAccessionTime(time(0));
 
     BOOL renameResult = WriteFile(
         diskHandle,
