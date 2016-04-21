@@ -66,7 +66,7 @@ int main(int argc, char **argv)
                 cout << "Enter data to be put into file: ";
                 getline(cin, input);
                 getline(cin, input);
-                if (input.length() > 4060)
+                if (input.length() > 4066)
                 {
                     cout << "File larger than supported size! Will be truncated.";
                 }
