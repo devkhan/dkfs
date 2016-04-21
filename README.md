@@ -16,4 +16,4 @@ For a list of commands, see [help.txt](help.txt), or enter h on the interactive 
 
 ### License
 
-All :copyright:s are reserved by Devesh Khandelwal and Ankit Kumar Pathak till the project submission, after that [WTF Public License](http://www.wtfpl.net/) applies.
+All :copyright:s are reserved by Devesh Khandelwal and Ankit Kumar Pathak till the project submission (i.e. April 21st, 2016 as of writing this, may extend further), after that [WTF Public License](http://www.wtfpl.net/) applies.
