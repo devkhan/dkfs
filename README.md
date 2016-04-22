@@ -1,4 +1,4 @@
-# dkfs
+# dkfs - deaD starK File System
 
 This is an implementation of the simplest possible file system. This is just an asssignment and not for any actual use. It can help you if you want to understand how file systems work by doing some trivial tasks on the file system. For this, we have created our own super-inefficient filesystem.
 
